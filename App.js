@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { StyleSheet, View, Text } from "react-native";
 import * as Location from "expo-location";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import BottomNavigation from "./src/navigation/bottomNavigation";
 import LocatioError from "./src/components/locationError/locationError";
-
+import Loader from "./src/components/Loader/loader";
 import ErrorBoundary from "./src/components/errorBoundry/errorBoundary";
 
 const setDeviceLocation = async (location) => {
@@ -38,20 +37,9 @@ export default function App() {
         ) : location ? (
           <BottomNavigation />
         ) : (
-          <View style={styles.container}>
-            <Text>Please Wait ...</Text>
-          </View>
+          <Loader />
         )}
       </ErrorBoundary>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

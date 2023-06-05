@@ -2,17 +2,23 @@ import { useEffect, useState } from "react";
 import { View, Text, Image } from "react-native";
 import { getWeatherData } from "@utils";
 
+import Loader from "../Loader/loader";
+
 import styles from "./todayWeather.style";
 
 const TodayWeather = () => {
   const [location, setLocation] = useState(null);
 
   useEffect(() => {
-    getWeatherData().then((res) => {
-      const { main, weather } = res;
-      const { description, icon } = weather[0];
-      setLocation({ ...main, description, icon });
-    });
+    getWeatherData()
+      .then((res) => {
+        const { main, weather } = res;
+        const { description, icon } = weather[0];
+        setLocation({ ...main, description, icon });
+      })
+      .catch((e) => {
+        console.error(e.message);
+      });
   }, []);
 
   return location ? (
@@ -43,7 +49,7 @@ const TodayWeather = () => {
       </View>
     </View>
   ) : (
-    <Text>Please wait...</Text>
+    <Loader />
   );
 };
 
