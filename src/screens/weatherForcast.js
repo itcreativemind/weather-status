@@ -1,25 +1,27 @@
-import React from "react";
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from "react";
+import { getWeatherForcastData } from "@utils";
 
 import WeatherForcast from "../components/weatherForcast/weatherForcast";
+import Loader from "../components/Loader/loader";
 
 const WeatherForcastScreen = () => {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <WeatherForcast />
-        </View>
-    )
-}
+  const [weatherForcastData, setWeatherForcastData] = useState(null);
 
-const styles = StyleSheet.create({
-    container: {
-       flex: 1, 
-       justifyContent: 'center', 
-       alignItems: 'center'
-    },
-    text: {
-        color: "#276221"
-    }
-})
+  useEffect(() => {
+    getWeatherForcastData()
+      .then((res) => {
+        setWeatherForcastData(res);
+      })
+      .catch((e) => {
+        console.error(e.message);
+      });
+  }, []);
+
+  return weatherForcastData ? (
+    <WeatherForcast weatherForcastData={weatherForcastData} />
+  ) : (
+    <Loader />
+  );
+};
 
 export default WeatherForcastScreen;

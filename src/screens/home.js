@@ -1,14 +1,29 @@
-import React from "react";
-import { Text, View } from 'react-native';
+import { useEffect, useState } from "react";
+import { getWeatherData } from "@utils";
 
 import TodayWeather from "../components/todayWeather/todayWeather";
+import Loader from "../components/Loader/loader";
 
 const HomeScreen = () => {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <TodayWeather />
-        </View>
-    )
-}
+  const [currentWeatherData, setCurrentWeatherData] = useState(null);
+
+  useEffect(() => {
+    getWeatherData()
+      .then((res) => {
+        const { main, weather } = res;
+        const { description, icon } = weather[0];
+        setCurrentWeatherData({ ...main, description, icon });
+      })
+      .catch((e) => {
+        console.error(e.message);
+      });
+  }, []);
+
+  return currentWeatherData ? (
+    <TodayWeather currentWeatherData={currentWeatherData} />
+  ) : (
+    <Loader />
+  );
+};
 
 export default HomeScreen;

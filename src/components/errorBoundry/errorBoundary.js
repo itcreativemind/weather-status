@@ -1,7 +1,10 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { View, Image } from "react-native";
 
 import styles from "./errorBoundry.style";
+
+import ErrorMessage from "../errorMessage/errorMessage";
+import { messages, images } from "@content";
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -19,11 +22,8 @@ class ErrorBoundary extends React.Component {
       // Render fallback UI
       return (
         <View style={styles.container}>
-          <Text style={styles.text}>Ohhh... There is an error</Text>
-          <Image
-            source={require("../../../assets/sad_face.png")}
-            style={styles.image}
-          />
+          <ErrorMessage {...messages.appError} />
+          <Image source={images.sadFace} style={styles.image} />
         </View>
       );
     }

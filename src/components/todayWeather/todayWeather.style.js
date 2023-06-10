@@ -3,9 +3,16 @@ import { colors } from "../../theme/colors";
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: colors.grey,
+    padding: 20,
+  },
+  weatherData: {
+    borderWidth: 1,
+    borderColor: colors.primaryColor,
+    borderRadius: 5,
     padding: 20,
   },
   title: {

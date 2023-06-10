@@ -1,25 +1,9 @@
-import { useEffect, useState } from "react";
 import { ScrollView, View, Text } from "react-native";
-import { getWeatherForcastData } from "@utils";
-
-import Loader from "../Loader/loader";
 
 import styles from "./weatherForcast.style";
 
-const WeatherForcast = () => {
-  const [weatherForcastData, setWeatherForcastData] = useState(null);
-
-  useEffect(() => {
-    getWeatherForcastData()
-      .then((res) => {
-        setWeatherForcastData(res);
-      })
-      .catch((e) => {
-        console.error(e.message);
-      });
-  }, []);
-
-  return weatherForcastData ? (
+const WeatherForcast = ({ weatherForcastData }) => {
+  return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
         {weatherForcastData.map((ele, index) => {
@@ -41,8 +25,6 @@ const WeatherForcast = () => {
         })}
       </View>
     </ScrollView>
-  ) : (
-    <Loader />
   );
 };
 
